@@ -14,10 +14,10 @@ import { signOut } from "@/lib/auth/actions";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
-  { name: "Bookings", href: "/dashboard/bookings", icon: CalendarIcon },
-  { name: "Websites", href: "/dashboard/websites", icon: GlobeIcon },
-  { name: "Sync Logs", href: "/dashboard/sync-logs", icon: ArrowPathIcon },
-  { name: "Settings", href: "/dashboard/settings", icon: Cog6ToothIcon },
+  { name: "Bookings", href: "/bookings", icon: CalendarIcon },
+  { name: "Websites", href: "/websites", icon: GlobeIcon },
+  { name: "Sync Logs", href: "/sync-logs", icon: ArrowPathIcon },
+  { name: "Settings", href: "/settings", icon: Cog6ToothIcon },
 ];
 
 export function Sidebar() {
