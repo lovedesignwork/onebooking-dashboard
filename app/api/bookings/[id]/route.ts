@@ -150,3 +150,77 @@ export async function PUT(
     );
   }
 }
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const supabase = await createClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const updates = await request.json();
+
+    const allowedFields = [
+      "status",
+      "hotel_name",
+      "room_number",
+      "admin_notes",
+    ];
+
+    const filteredUpdates: Record<string, unknown> = {};
+
+    for (const field of allowedFields) {
+      if (field in updates) {
+        filteredUpdates[field] = updates[field];
+      }
+    }
+
+    if (Object.keys(filteredUpdates).length === 0) {
+      return NextResponse.json(
+        { success: false, error: "No valid fields to update" },
+        { status: 400 }
+      );
+    }
+
+    const { data: updatedBooking, error: updateError } = await supabase
+      .from("bookings")
+      .update({
+        ...filteredUpdates,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (updateError) {
+      console.error("Error updating booking:", updateError);
+      return NextResponse.json(
+        { success: false, error: "Failed to update booking" },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: updatedBooking,
+    });
+  } catch (error) {
+    console.error("API error:", error);
+    return NextResponse.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
