@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { Header } from "@/components/dashboard/header";
 import { getUser } from "@/lib/auth/get-user";
@@ -8,11 +7,9 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Middleware handles auth redirect, so user should always exist here
+  // If getUser returns null, show minimal header (auth state issue)
   const user = await getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
