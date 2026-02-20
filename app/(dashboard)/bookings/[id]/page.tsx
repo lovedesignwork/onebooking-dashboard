@@ -228,7 +228,7 @@ export default async function BookingDetailPage({ params }: PageProps) {
                         hour: "2-digit",
                         minute: "2-digit",
                         timeZone: "Asia/Bangkok",
-                      }) + " (GMT+7)"
+                      })
                     : "N/A"}
                 </p>
               </div>
@@ -242,7 +242,7 @@ export default async function BookingDetailPage({ params }: PageProps) {
                     hour: "2-digit",
                     minute: "2-digit",
                     timeZone: "Asia/Bangkok",
-                  })} (GMT+7)
+                  })}
                 </p>
               </div>
               <div>
@@ -255,7 +255,7 @@ export default async function BookingDetailPage({ params }: PageProps) {
                     hour: "2-digit",
                     minute: "2-digit",
                     timeZone: "Asia/Bangkok",
-                  })} (GMT+7)
+                  })}
                 </p>
               </div>
             </div>

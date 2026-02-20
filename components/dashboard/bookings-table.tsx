@@ -150,8 +150,7 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                           hour: "2-digit",
                           minute: "2-digit",
                           timeZone: "Asia/Bangkok",
-                        })}{" "}
-                        (GMT+7)
+                        })}
                       </p>
                     </td>
                     <td className="px-4 py-4">

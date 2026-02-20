@@ -66,7 +66,7 @@ export function SyncHistory({ logs }: SyncHistoryProps) {
                     hour: "2-digit",
                     minute: "2-digit",
                     timeZone: "Asia/Bangkok",
-                  })} (GMT+7)
+                  })}
                 </p>
                 {log.error_message && (
                   <p className="text-xs text-red-600 mt-1 bg-red-50 px-2 py-1 rounded">
