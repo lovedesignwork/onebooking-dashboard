@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/icons";
 import type { Booking } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 async function getStats() {
   const supabase = await createClient();
 
