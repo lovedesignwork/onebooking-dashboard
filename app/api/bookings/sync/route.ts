@@ -38,15 +38,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (
-      !payload.source_booking_id ||
-      !payload.booking_ref ||
-      !payload.customer?.email
-    ) {
+    const missingFields: string[] = [];
+    if (!payload.source_booking_id) missingFields.push("source_booking_id");
+    if (!payload.booking_ref) missingFields.push("booking_ref");
+    if (!payload.customer?.email) missingFields.push("customer.email");
+
+    if (missingFields.length > 0) {
+      console.error("[Sync API] Missing fields:", missingFields, "Payload received:", JSON.stringify(payload, null, 2));
       return NextResponse.json<ApiResponse>(
         {
           success: false,
-          error: "Missing required fields: source_booking_id, booking_ref, customer.email",
+          error: `Missing required fields: ${missingFields.join(", ")}`,
           code: "INVALID_PAYLOAD",
         },
         { status: 400 }
