@@ -65,7 +65,7 @@ export default async function WebsiteDetailPage({ params }: PageProps) {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Link
-          href="/dashboard/websites"
+          href="/websites"
           className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
         >
           <ChevronLeftIcon className="w-5 h-5 text-gray-600" />
@@ -165,7 +165,7 @@ export default async function WebsiteDetailPage({ params }: PageProps) {
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
               <Link
-                href={`/dashboard/bookings?website_id=${website.id}`}
+                href={`/bookings?website_id=${website.id}`}
                 className="block w-full text-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg font-medium hover:bg-blue-100 transition-colors"
               >
                 View All Bookings

@@ -24,7 +24,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white">
+    <aside className="hidden lg:block fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white">
       <div className="flex h-16 items-center px-6 border-b border-gray-800">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-sm">

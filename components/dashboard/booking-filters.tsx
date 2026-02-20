@@ -68,7 +68,7 @@ export function BookingFilters({ websites }: BookingFiltersProps) {
     setStatus("");
     setDateFrom("");
     setDateTo("");
-    router.push("/dashboard/bookings");
+    router.push("/bookings");
   };
 
   return (

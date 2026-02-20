@@ -31,7 +31,7 @@ export function RecentBookings({ bookings }: RecentBookingsProps) {
             Recent Bookings
           </h3>
           <Link
-            href="/dashboard/bookings"
+            href="/bookings"
             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
           >
             View all
@@ -56,7 +56,7 @@ export function RecentBookings({ bookings }: RecentBookingsProps) {
               <tr key={booking.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4">
                   <Link
-                    href={`/dashboard/bookings/${booking.id}`}
+                    href={`/bookings/${booking.id}`}
                     className="text-sm font-medium text-blue-600 hover:text-blue-700"
                   >
                     {booking.booking_ref}

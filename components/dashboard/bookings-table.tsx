@@ -48,7 +48,7 @@ export function BookingsTable({ bookings }: BookingsTableProps) {
               <tr key={booking.id} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4">
                   <Link
-                    href={`/dashboard/bookings/${booking.id}`}
+                    href={`/bookings/${booking.id}`}
                     className="text-sm font-medium text-blue-600 hover:text-blue-700"
                   >
                     {booking.booking_ref}
@@ -107,7 +107,7 @@ export function BookingsTable({ bookings }: BookingsTableProps) {
                 </td>
                 <td className="px-6 py-4 text-center">
                   <Link
-                    href={`/dashboard/bookings/${booking.id}`}
+                    href={`/bookings/${booking.id}`}
                     className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                   >
                     <EyeIcon className="w-5 h-5" />

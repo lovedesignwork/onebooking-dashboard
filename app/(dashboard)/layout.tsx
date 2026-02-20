@@ -17,7 +17,7 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
-      <div className="lg:pl-64">
+      <div className="min-h-screen lg:pl-64">
         <Header user={user} />
         <main className="p-4 lg:p-8">{children}</main>
       </div>

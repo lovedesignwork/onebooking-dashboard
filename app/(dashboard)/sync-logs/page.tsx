@@ -201,7 +201,7 @@ export default async function SyncLogsPage({ searchParams }: PageProps) {
                     <td className="px-6 py-4">
                       {log.booking?.booking_ref ? (
                         <a
-                          href={`/dashboard/bookings/${log.booking_id}`}
+                          href={`/bookings/${log.booking_id}`}
                           className="text-sm text-blue-600 hover:text-blue-700 font-medium"
                         >
                           {log.booking.booking_ref}

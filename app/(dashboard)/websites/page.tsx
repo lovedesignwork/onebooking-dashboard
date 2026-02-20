@@ -45,7 +45,7 @@ export default async function WebsitesPage() {
           </p>
         </div>
         <Link
-          href="/dashboard/websites/new"
+          href="/websites/new"
           className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
         >
           <PlusIcon className="w-5 h-5" />
@@ -102,14 +102,14 @@ export default async function WebsitesPage() {
 
               <div className="mt-4 flex gap-2">
                 <Link
-                  href={`/dashboard/websites/${website.id}`}
+                  href={`/websites/${website.id}`}
                   className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
                 >
                   <EyeIcon className="w-4 h-4" />
                   View Details
                 </Link>
                 <Link
-                  href={`/dashboard/bookings?website_id=${website.id}`}
+                  href={`/bookings?website_id=${website.id}`}
                   className="flex-1 inline-flex items-center justify-center px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-sm font-medium text-blue-700 hover:bg-blue-100 transition-colors"
                 >
                   View Bookings
@@ -129,7 +129,7 @@ export default async function WebsitesPage() {
               Add your first source website to start receiving bookings
             </p>
             <Link
-              href="/dashboard/websites/new"
+              href="/websites/new"
               className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700"
             >
               <PlusIcon className="w-5 h-5" />
