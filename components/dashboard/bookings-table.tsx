@@ -189,20 +189,20 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                       {transport ? (
                         <div className="space-y-1">
                           <span
-                            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${transport.color}`}
+                            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${transport.color}`}
                           >
-                            <transport.Icon className="w-3.5 h-3.5" />
+                            <transport.Icon className="w-3.5 h-3.5 flex-shrink-0" />
                             {transport.label}
                           </span>
                           {(booking.guest_count > 0 || booking.non_players > 0) && (
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-slate-500 whitespace-nowrap">
                               Pickup: {booking.guest_count + (booking.non_players || 0)} pax
                             </p>
                           )}
                         </div>
                       ) : booking.transport_type === "self_arrange" ? (
-                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium text-slate-600 bg-slate-50">
-                          <MapPinIcon className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap text-slate-600 bg-slate-50">
+                          <MapPinIcon className="w-3.5 h-3.5 flex-shrink-0" />
                           Self Transfer
                         </span>
                       ) : (
@@ -229,9 +229,9 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                           {booking.addons.map((addon, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-700 border border-orange-200 rounded text-xs font-medium"
+                              className="inline-flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-700 border border-orange-200 rounded text-xs font-medium whitespace-nowrap"
                             >
-                              <GiftIcon className="w-3 h-3" />
+                              <GiftIcon className="w-3 h-3 flex-shrink-0" />
                               {addon.quantity > 1 && `${addon.quantity}x `}
                               {addon.name}
                             </span>
