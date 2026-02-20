@@ -187,11 +187,23 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                     </td>
                     <td className="px-4 py-4">
                       {transport ? (
-                        <span
-                          className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${transport.color}`}
-                        >
-                          <transport.Icon className="w-3.5 h-3.5" />
-                          {transport.label}
+                        <div className="space-y-1">
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${transport.color}`}
+                          >
+                            <transport.Icon className="w-3.5 h-3.5" />
+                            {transport.label}
+                          </span>
+                          {(booking.guest_count > 0 || booking.non_players > 0) && (
+                            <p className="text-xs text-slate-500">
+                              Pickup: {booking.guest_count + (booking.non_players || 0)} pax
+                            </p>
+                          )}
+                        </div>
+                      ) : booking.transport_type === "self_arrange" ? (
+                        <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium text-slate-600 bg-slate-50">
+                          <MapPinIcon className="w-3.5 h-3.5" />
+                          Self Transfer
                         </span>
                       ) : (
                         <span className="text-sm text-slate-400">-</span>
@@ -213,24 +225,17 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                     </td>
                     <td className="px-4 py-4">
                       {booking.addons && booking.addons.length > 0 ? (
-                        <div className="flex flex-wrap gap-1">
-                          {booking.addons.slice(0, 2).map((addon, idx) => (
+                        <div className="flex flex-col gap-1">
+                          {booking.addons.map((addon, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex items-center gap-1 px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-full text-xs"
+                              className="inline-flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-700 border border-orange-200 rounded text-xs font-medium"
                             >
                               <GiftIcon className="w-3 h-3" />
                               {addon.quantity > 1 && `${addon.quantity}x `}
-                              {addon.name.length > 12
-                                ? addon.name.substring(0, 12) + "..."
-                                : addon.name}
+                              {addon.name}
                             </span>
                           ))}
-                          {booking.addons.length > 2 && (
-                            <span className="text-xs text-slate-500">
-                              +{booking.addons.length - 2} more
-                            </span>
-                          )}
                         </div>
                       ) : (
                         <span className="text-sm text-slate-400">-</span>
