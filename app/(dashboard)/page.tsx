@@ -3,7 +3,6 @@ import { StatsCard } from "@/components/dashboard/stats-card";
 import { RecentBookings } from "@/components/dashboard/recent-bookings";
 import {
   CalendarIcon,
-  UsersIcon,
   CurrencyDollarIcon,
   GlobeIcon,
 } from "@/components/ui/icons";

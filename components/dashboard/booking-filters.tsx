@@ -32,13 +32,6 @@ export function BookingFilters({ websites }: BookingFiltersProps) {
 
   const hasFilters = websiteId || status || dateFrom || dateTo;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      updateFilters({ search });
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [search]);
-
   const updateFilters = (updates: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
 
@@ -54,6 +47,20 @@ export function BookingFilters({ websites }: BookingFiltersProps) {
 
     router.push(`?${params.toString()}`);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (search) {
+        params.set("search", search);
+      } else {
+        params.delete("search");
+      }
+      params.delete("page");
+      router.push(`?${params.toString()}`);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, searchParams, router]);
 
   const clearFilters = () => {
     setSearch("");

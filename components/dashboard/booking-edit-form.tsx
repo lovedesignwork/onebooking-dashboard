@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Booking } from "@/types";
+import type { Booking, BookingStatus } from "@/types";
 
 interface BookingEditFormProps {
   booking: Booking;
@@ -95,7 +95,7 @@ export function BookingEditForm({ booking }: BookingEditFormProps) {
             <select
               value={formData.status}
               onChange={(e) =>
-                setFormData({ ...formData, status: e.target.value })
+                setFormData({ ...formData, status: e.target.value as BookingStatus })
               }
               className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
             >
