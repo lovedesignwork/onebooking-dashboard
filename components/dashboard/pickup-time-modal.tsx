@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   XMarkIcon,
@@ -8,12 +8,73 @@ import {
   PaperAirplaneIcon,
   DocumentDuplicateIcon,
   CheckCircleIcon,
+  ChevronDownIcon,
 } from "@/components/ui/icons";
 import type { Booking } from "@/types";
 
 interface PickupTimeModalProps {
   booking: Booking;
   onClose: () => void;
+}
+
+interface TimeDropdownProps {
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+  label: string;
+}
+
+function TimeDropdown({ value, options, onChange, label }: TimeDropdownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-24 h-16 bg-slate-100 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white text-2xl font-bold text-center text-slate-800 cursor-pointer transition-all hover:border-slate-300 hover:bg-slate-50 flex items-center justify-center gap-1"
+      >
+        {value}
+        <ChevronDownIcon className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+      <span className="absolute -bottom-5 left-0 right-0 text-center text-xs text-slate-400">{label}</span>
+      
+      {isOpen && (
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white rounded-xl shadow-lg border border-slate-200 p-2 z-10 w-[200px] max-h-[240px] overflow-y-auto">
+          <div className="grid grid-cols-4 gap-1">
+            {options.map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                onClick={() => {
+                  onChange(opt);
+                  setIsOpen(false);
+                }}
+                className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${
+                  value === opt
+                    ? "bg-blue-600 text-white"
+                    : "bg-slate-50 text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                }`}
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function PickupTimeModal({ booking, onClose }: PickupTimeModalProps) {
@@ -188,35 +249,19 @@ The Team`;
               Pickup Time
             </label>
             <div className="flex items-center justify-center gap-2">
-              <div className="relative">
-                <select
-                  value={hours}
-                  onChange={(e) => setHours(e.target.value)}
-                  className="appearance-none w-24 h-16 px-4 bg-slate-100 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white text-2xl font-bold text-center text-slate-800 cursor-pointer transition-all hover:border-slate-300"
-                >
-                  {hourOptions.map((h) => (
-                    <option key={h} value={h}>
-                      {h}
-                    </option>
-                  ))}
-                </select>
-                <span className="absolute -bottom-5 left-0 right-0 text-center text-xs text-slate-400">Hour</span>
-              </div>
+              <TimeDropdown
+                value={hours}
+                options={hourOptions}
+                onChange={setHours}
+                label="Hour"
+              />
               <span className="text-3xl font-bold text-slate-300 mx-1">:</span>
-              <div className="relative">
-                <select
-                  value={minutes}
-                  onChange={(e) => setMinutes(e.target.value)}
-                  className="appearance-none w-24 h-16 px-4 bg-slate-100 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white text-2xl font-bold text-center text-slate-800 cursor-pointer transition-all hover:border-slate-300"
-                >
-                  {minuteOptions.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-                <span className="absolute -bottom-5 left-0 right-0 text-center text-xs text-slate-400">Minute</span>
-              </div>
+              <TimeDropdown
+                value={minutes}
+                options={minuteOptions}
+                onChange={setMinutes}
+                label="Minute"
+              />
             </div>
             <div className="mt-8 text-center">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
