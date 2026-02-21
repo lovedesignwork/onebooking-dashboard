@@ -47,6 +47,7 @@ export interface Booking {
   addons: BookingAddon[];
   stripe_payment_intent_id: string | null;
   admin_notes: string | null;
+  pickup_time: string | null;
   source_created_at: string | null;
   created_at: string;
   updated_at: string;

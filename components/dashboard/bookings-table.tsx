@@ -14,8 +14,10 @@ import {
   MapPinIcon,
   TagIcon,
   GiftIcon,
+  ClockIcon,
 } from "@/components/ui/icons";
 import { BookingEditModal } from "./booking-edit-modal";
+import { PickupTimeModal } from "./pickup-time-modal";
 import type { Booking } from "@/types";
 
 interface BookingsTableProps {
@@ -43,6 +45,11 @@ const transportConfig: Record<string, { label: string; color: string; Icon: Reac
 export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTableProps) {
   const router = useRouter();
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
+  const [pickupTimeBooking, setPickupTimeBooking] = useState<Booking | null>(null);
+
+  const hasTransport = (booking: Booking) => {
+    return booking.transport_type && booking.transport_type !== "self_arrange";
+  };
 
   const handleSort = (field: string) => {
     const params = new URLSearchParams(window.location.search);
@@ -115,6 +122,7 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                 <th className="px-4 py-3">Transport</th>
                 <th className="px-4 py-3">Hotel / Room</th>
                 <th className="px-4 py-3">Add-ons</th>
+                <th className="px-4 py-3">Pickup Time</th>
                 <SortableHeader field="total_amount">Amount</SortableHeader>
                 <SortableHeader field="status">Status</SortableHeader>
                 <th className="px-4 py-3 text-center">Actions</th>
@@ -242,6 +250,29 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                       )}
                     </td>
                     <td className="px-4 py-4">
+                      {hasTransport(booking) ? (
+                        booking.pickup_time ? (
+                          <button
+                            onClick={() => setPickupTimeBooking(booking)}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors"
+                          >
+                            <ClockIcon className="w-4 h-4" />
+                            {booking.pickup_time}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => setPickupTimeBooking(booking)}
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-lg text-sm font-medium hover:bg-amber-100 transition-colors"
+                          >
+                            <ClockIcon className="w-4 h-4" />
+                            Set Time
+                          </button>
+                        )
+                      ) : (
+                        <span className="text-sm text-slate-400">-</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-4">
                       <p className="text-sm font-medium text-slate-800">
                         {booking.currency} {booking.total_amount.toLocaleString()}
                       </p>
@@ -293,6 +324,13 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
         <BookingEditModal
           booking={editingBooking}
           onClose={() => setEditingBooking(null)}
+        />
+      )}
+
+      {pickupTimeBooking && (
+        <PickupTimeModal
+          booking={pickupTimeBooking}
+          onClose={() => setPickupTimeBooking(null)}
         />
       )}
     </>
