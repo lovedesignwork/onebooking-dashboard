@@ -187,13 +187,12 @@ The Team`;
             <label className="block text-sm font-medium text-slate-700 mb-3">
               Pickup Time
             </label>
-            <div className="flex items-center gap-3">
-              <div className="flex-1">
-                <label className="block text-xs text-slate-500 mb-1">Hour</label>
+            <div className="flex items-center justify-center gap-2">
+              <div className="relative">
                 <select
                   value={hours}
                   onChange={(e) => setHours(e.target.value)}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg font-medium text-center"
+                  className="appearance-none w-24 h-16 px-4 bg-slate-100 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white text-2xl font-bold text-center text-slate-800 cursor-pointer transition-all hover:border-slate-300"
                 >
                   {hourOptions.map((h) => (
                     <option key={h} value={h}>
@@ -201,14 +200,14 @@ The Team`;
                     </option>
                   ))}
                 </select>
+                <span className="absolute -bottom-5 left-0 right-0 text-center text-xs text-slate-400">Hour</span>
               </div>
-              <span className="text-2xl font-bold text-slate-400 mt-5">:</span>
-              <div className="flex-1">
-                <label className="block text-xs text-slate-500 mb-1">Minute</label>
+              <span className="text-3xl font-bold text-slate-300 mx-1">:</span>
+              <div className="relative">
                 <select
                   value={minutes}
                   onChange={(e) => setMinutes(e.target.value)}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg font-medium text-center"
+                  className="appearance-none w-24 h-16 px-4 bg-slate-100 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white text-2xl font-bold text-center text-slate-800 cursor-pointer transition-all hover:border-slate-300"
                 >
                   {minuteOptions.map((m) => (
                     <option key={m} value={m}>
@@ -216,11 +215,15 @@ The Team`;
                     </option>
                   ))}
                 </select>
+                <span className="absolute -bottom-5 left-0 right-0 text-center text-xs text-slate-400">Minute</span>
               </div>
             </div>
-            <p className="text-center text-sm text-slate-500 mt-2">
-              Selected: <span className="font-medium text-slate-800">{pickupTime}</span>
-            </p>
+            <div className="mt-8 text-center">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+                <ClockIcon className="w-4 h-4" />
+                Pickup at {pickupTime}
+              </span>
+            </div>
           </div>
 
           {error && (

@@ -16,10 +16,10 @@ import {
   CheckIcon,
   TagIcon,
   GlobeIcon,
-  PaperAirplaneIcon,
   DocumentDuplicateIcon,
   CheckCircleIcon,
 } from "@/components/ui/icons";
+import { StatusSelect } from "@/components/ui/select";
 import type { Booking, BookingStatus, SyncLog } from "@/types";
 
 interface BookingDetailClientProps {
@@ -41,15 +41,6 @@ const transportConfig: Record<string, { label: string; color: string; bgColor: s
   private: { label: "Private Transfer", color: "text-purple-600", bgColor: "bg-purple-100", Icon: CarIcon },
   self_arrange: { label: "Self Transfer", color: "text-slate-600", bgColor: "bg-slate-100", Icon: MapPinIcon },
 };
-
-const statusOptions: { value: BookingStatus; label: string }[] = [
-  { value: "pending", label: "Pending" },
-  { value: "confirmed", label: "Confirmed" },
-  { value: "completed", label: "Completed" },
-  { value: "cancelled", label: "Cancelled" },
-  { value: "refunded", label: "Refunded" },
-  { value: "no_show", label: "No Show" },
-];
 
 export function BookingDetailClient({ booking, syncLogs }: BookingDetailClientProps) {
   const router = useRouter();
@@ -331,15 +322,10 @@ ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (R
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">Status</label>
-                    <select
+                    <StatusSelect
                       value={formData.status}
-                      onChange={(e) => setFormData({ ...formData, status: e.target.value as BookingStatus })}
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#1a237e]/20 focus:border-[#1a237e] outline-none transition-all"
-                    >
-                      {statusOptions.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                      ))}
-                    </select>
+                      onChange={(value) => setFormData({ ...formData, status: value as BookingStatus })}
+                    />
                   </div>
 
                   <div>

@@ -3,21 +3,13 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { XMarkIcon, CheckIcon } from "@/components/ui/icons";
+import { StatusSelect } from "@/components/ui/select";
 import type { Booking, BookingStatus } from "@/types";
 
 interface BookingEditModalProps {
   booking: Booking;
   onClose: () => void;
 }
-
-const statusOptions: { value: BookingStatus; label: string }[] = [
-  { value: "pending", label: "Pending" },
-  { value: "confirmed", label: "Confirmed" },
-  { value: "completed", label: "Completed" },
-  { value: "cancelled", label: "Cancelled" },
-  { value: "refunded", label: "Refunded" },
-  { value: "no_show", label: "No Show" },
-];
 
 export function BookingEditModal({ booking, onClose }: BookingEditModalProps) {
   const router = useRouter();
@@ -98,18 +90,11 @@ export function BookingEditModal({ booking, onClose }: BookingEditModalProps) {
             <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Status
             </label>
-            <select
+            <StatusSelect
               value={status}
-              onChange={(e) => setStatus(e.target.value as BookingStatus)}
+              onChange={(value) => setStatus(value as BookingStatus)}
               disabled={isPending || success}
-              className="w-full px-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#1a237e] focus:border-transparent outline-none disabled:bg-slate-50"
-            >
-              {statusOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            />
           </div>
 
           <div>

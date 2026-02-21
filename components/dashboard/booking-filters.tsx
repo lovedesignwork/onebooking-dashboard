@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect, useTransition } from "react";
 import { MagnifyingGlassIcon, FunnelIcon, XMarkIcon, DownloadIcon } from "@/components/ui/icons";
+import { Select } from "@/components/ui/select";
 import type { Website, Booking } from "@/types";
 
 interface BookingFiltersProps {
@@ -12,12 +13,12 @@ interface BookingFiltersProps {
 
 const statusOptions = [
   { value: "", label: "All Statuses" },
-  { value: "pending", label: "Pending" },
-  { value: "confirmed", label: "Confirmed" },
-  { value: "completed", label: "Completed" },
-  { value: "cancelled", label: "Cancelled" },
-  { value: "refunded", label: "Refunded" },
-  { value: "no_show", label: "No Show" },
+  { value: "pending", label: "Pending", color: "#f59e0b" },
+  { value: "confirmed", label: "Confirmed", color: "#10b981" },
+  { value: "completed", label: "Completed", color: "#3b82f6" },
+  { value: "cancelled", label: "Cancelled", color: "#ef4444" },
+  { value: "refunded", label: "Refunded", color: "#8b5cf6" },
+  { value: "no_show", label: "No Show", color: "#f97316" },
 ];
 
 export function BookingFilters({ websites, bookings = [] }: BookingFiltersProps) {
@@ -201,41 +202,36 @@ export function BookingFilters({ websites, bookings = [] }: BookingFiltersProps)
               <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Website
               </label>
-              <select
+              <Select
                 value={websiteId}
-                onChange={(e) => {
-                  setWebsiteId(e.target.value);
-                  updateFilters({ website_id: e.target.value });
+                onChange={(value) => {
+                  setWebsiteId(value);
+                  updateFilters({ website_id: value });
                 }}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#1a237e] focus:border-transparent outline-none"
-              >
-                <option value="">All Websites</option>
-                {websites.map((website) => (
-                  <option key={website.id} value={website.id}>
-                    {website.name}
-                  </option>
-                ))}
-              </select>
+                options={[
+                  { value: "", label: "All Websites" },
+                  ...websites.map((website) => ({
+                    value: website.id,
+                    label: website.name,
+                  })),
+                ]}
+                placeholder="All Websites"
+              />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Status
               </label>
-              <select
+              <Select
                 value={status}
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                  updateFilters({ status: e.target.value });
+                onChange={(value) => {
+                  setStatus(value);
+                  updateFilters({ status: value });
                 }}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#1a237e] focus:border-transparent outline-none"
-              >
-                {statusOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                options={statusOptions}
+                placeholder="All Statuses"
+              />
             </div>
 
             <div className="lg:col-span-2">
