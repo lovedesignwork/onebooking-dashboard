@@ -15,6 +15,7 @@ import {
   TagIcon,
   GiftIcon,
   ClockIcon,
+  StickyNoteIcon,
 } from "@/components/ui/icons";
 import { BookingEditModal } from "./booking-edit-modal";
 import { PickupTimeModal } from "./pickup-time-modal";
@@ -124,6 +125,7 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                 <th className="px-4 py-3">Add-ons</th>
                 <th className="px-4 py-3">Pickup Time</th>
                 <SortableHeader field="total_amount">Amount</SortableHeader>
+                <th className="px-4 py-3">Notes</th>
                 <SortableHeader field="status">Status</SortableHeader>
                 <th className="px-4 py-3 text-center">Actions</th>
               </tr>
@@ -283,6 +285,18 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                             -{booking.currency} {booking.discount_amount.toLocaleString()}
                           </span>
                         </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-4">
+                      {booking.special_requests ? (
+                        <div className="flex items-start gap-1.5 max-w-[180px]" title={booking.special_requests}>
+                          <StickyNoteIcon className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-slate-600 line-clamp-2">
+                            {booking.special_requests}
+                          </p>
+                        </div>
+                      ) : (
+                        <span className="text-xs text-slate-400">-</span>
                       )}
                     </td>
                     <td className="px-4 py-4">
