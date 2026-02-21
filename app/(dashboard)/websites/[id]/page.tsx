@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ChevronLeftIcon, GlobeIcon } from "@/components/ui/icons";
 import { WebsiteEditForm } from "@/components/dashboard/website-edit-form";
+import { ApiCredentialsCard } from "@/components/dashboard/api-credentials-card";
 import type { Website } from "@/types";
 
 interface PageProps {
@@ -93,55 +94,12 @@ export default async function WebsiteDetailPage({ params }: PageProps) {
         <div className="lg:col-span-2 space-y-6">
           <WebsiteEditForm website={website} />
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900">
-                API Credentials
-              </h3>
-              <p className="text-sm text-gray-500">
-                Use these credentials to connect your website
-              </p>
-            </div>
-            <div className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  API Key
-                </label>
-                <div className="flex items-center gap-2">
-                  <code className="flex-1 px-4 py-2.5 bg-gray-100 rounded-lg text-sm font-mono text-gray-800 overflow-x-auto">
-                    {website.api_key}
-                  </code>
-                  <button
-                    onClick={() => navigator.clipboard.writeText(website.api_key)}
-                    className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-50"
-                  >
-                    Copy
-                  </button>
-                </div>
-              </div>
-
-              {website.webhook_secret && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Webhook Secret
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <code className="flex-1 px-4 py-2.5 bg-gray-100 rounded-lg text-sm font-mono text-gray-800 overflow-x-auto">
-                      {website.webhook_secret}
-                    </code>
-                    <button
-                      onClick={() =>
-                        navigator.clipboard.writeText(website.webhook_secret!)
-                      }
-                      className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-50"
-                    >
-                      Copy
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <ApiCredentialsCard
+            websiteId={website.id}
+            websiteName={website.name}
+            apiKey={website.api_key}
+            webhookSecret={website.webhook_secret}
+          />
         </div>
 
         <div className="space-y-6">
