@@ -20,10 +20,10 @@ const mainNavigation = [
 ];
 
 const bookingLinks = [
-  { name: "All Bookings", href: "/bookings", websiteId: null, shortName: "All" },
-  { name: "HW Bookings", href: "/bookings?website_id=hanuman-world", websiteId: "hanuman-world", color: "bg-green-500", shortName: "HW" },
-  { name: "FH Bookings", href: "/bookings?website_id=flying-hanuman", websiteId: "flying-hanuman", color: "bg-orange-500", shortName: "FH" },
-  { name: "HL Bookings", href: "/bookings?website_id=hanuman-luge", websiteId: "hanuman-luge", color: "bg-purple-500", shortName: "HL" },
+  { name: "All Bookings", href: "/bookings", websiteId: null },
+  { name: "HW Bookings", href: "/bookings?website_id=hanuman-world", websiteId: "hanuman-world" },
+  { name: "FH Bookings", href: "/bookings?website_id=flying-hanuman", websiteId: "flying-hanuman" },
+  { name: "HL Bookings", href: "/bookings?website_id=hanuman-luge", websiteId: "hanuman-luge" },
 ];
 
 const bottomNavigation = [
@@ -68,7 +68,7 @@ export function Sidebar() {
                 key={item.name}
                 href={item.href}
                 title={isCollapsed ? item.name : undefined}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[17px] font-medium transition-colors ${
                   isCollapsed ? "justify-center" : ""
                 } ${
                   isActive
@@ -99,7 +99,7 @@ export function Sidebar() {
                 key={link.name}
                 href={link.href}
                 title={isCollapsed ? link.name : undefined}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[17px] font-medium transition-colors ${
                   isCollapsed ? "justify-center" : ""
                 } ${
                   isActive
@@ -107,13 +107,7 @@ export function Sidebar() {
                     : "text-gray-300 hover:bg-gray-800 hover:text-white"
                 }`}
               >
-                {link.websiteId ? (
-                  <span className={`w-5 h-5 rounded flex items-center justify-center text-xs font-bold text-white flex-shrink-0 ${link.color}`}>
-                    {link.shortName}
-                  </span>
-                ) : (
-                  <CalendarIcon className="w-5 h-5 flex-shrink-0" />
-                )}
+                <CalendarIcon className="w-5 h-5 flex-shrink-0" />
                 {!isCollapsed && link.name}
               </Link>
             );
@@ -138,7 +132,7 @@ export function Sidebar() {
                 key={item.name}
                 href={item.href}
                 title={isCollapsed ? item.name : undefined}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[17px] font-medium transition-colors ${
                   isCollapsed ? "justify-center" : ""
                 } ${
                   isActive
@@ -156,7 +150,7 @@ export function Sidebar() {
         <div className={`pt-4 border-t border-gray-800 ${isCollapsed ? "px-2" : "px-3"}`}>
           <button
             onClick={toggleSidebar}
-            className={`flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors ${
+            className={`flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-[17px] font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors ${
               isCollapsed ? "justify-center" : ""
             }`}
             title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
@@ -174,7 +168,7 @@ export function Sidebar() {
           <button
             onClick={() => signOut()}
             title={isCollapsed ? "Sign Out" : undefined}
-            className={`flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors ${
+            className={`flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-[17px] font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors ${
               isCollapsed ? "justify-center" : ""
             }`}
           >
