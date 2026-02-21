@@ -61,13 +61,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { data: adminUser } = await supabase
+    const { data: adminUser, error: adminError } = await supabaseAdmin
       .from("admin_users")
       .select("role")
       .eq("id", user.id)
       .single();
 
+    if (adminError) {
+      console.error("[Websites API] Admin user lookup error:", adminError);
+    }
+
     if (!adminUser || !["superadmin", "admin"].includes(adminUser.role)) {
+      console.error("[Websites API] Forbidden - user:", user.id, "adminUser:", adminUser);
       return NextResponse.json<ApiResponse>(
         { success: false, error: "Forbidden", code: "FORBIDDEN" },
         { status: 403 }
