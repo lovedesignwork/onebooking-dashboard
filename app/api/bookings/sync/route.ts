@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { validateApiKey, getApiKeyFromHeaders } from "@/lib/utils/api-auth";
+import { sendBookingNotification } from "@/lib/line/notify";
 import type { BookingSyncPayload, ApiResponse } from "@/types";
 
 const supabaseAdmin = createClient(
@@ -159,6 +160,32 @@ export async function POST(request: NextRequest) {
       payload: payload,
       status: "success",
     });
+
+    // Send LINE notification for new bookings (non-blocking)
+    if (eventType === "create") {
+      sendBookingNotification({
+        websiteId: website.id,
+        websiteName: website.name,
+        bookingRef: payload.booking_ref,
+        customerName: payload.customer.name,
+        customerEmail: payload.customer.email,
+        customerPhone: payload.customer.phone || null,
+        packageName: payload.package_name,
+        activityDate: payload.activity_date,
+        timeSlot: payload.time_slot,
+        guestCount: payload.guest_count,
+        nonPlayers: payload.transport?.non_players || 0,
+        transportType: payload.transport?.type || null,
+        hotelName: payload.transport?.hotel_name || null,
+        roomNumber: payload.transport?.room_number || null,
+        totalAmount: payload.total_amount,
+        currency: payload.currency || "THB",
+        status: payload.status || "confirmed",
+        specialRequests: payload.customer.special_requests || null,
+      }).catch((err) => {
+        console.error("[Sync API] LINE notification error:", err);
+      });
+    }
 
     return NextResponse.json<ApiResponse>(
       {
