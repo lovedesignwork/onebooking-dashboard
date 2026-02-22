@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Bars3Icon, ChevronDownIcon } from "@/components/ui/icons";
+import { Bars3Icon, ChevronDownIcon, ArrowRightOnRectangleIcon } from "@/components/ui/icons";
+import { signOut } from "@/lib/auth/actions";
 import type { AdminUser } from "@/types";
 
 interface HeaderProps {
@@ -48,14 +49,26 @@ export function Header({ user, onMenuClick }: HeaderProps) {
                   className="fixed inset-0 z-10"
                   onClick={() => setDropdownOpen(false)}
                 />
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-20">
-                  <div className="px-4 py-2 border-b border-gray-100">
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 py-1 z-20 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
                     <p className="text-sm font-medium text-gray-900 truncate">
+                      {user?.full_name || "User"}
+                    </p>
+                    <p className="text-xs text-gray-500 truncate">
                       {user?.email}
                     </p>
-                    <p className="text-xs text-gray-500 capitalize">
+                    <span className="inline-block mt-1 px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-700 rounded-full capitalize">
                       {user?.role}
-                    </p>
+                    </span>
+                  </div>
+                  <div className="py-1">
+                    <button
+                      onClick={() => signOut()}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      <ArrowRightOnRectangleIcon className="w-4 h-4" />
+                      Sign Out
+                    </button>
                   </div>
                 </div>
               </>

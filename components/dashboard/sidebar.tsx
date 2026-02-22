@@ -8,11 +8,9 @@ import {
   GlobeIcon,
   ArrowPathIcon,
   Cog6ToothIcon,
-  ArrowRightOnRectangleIcon,
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@/components/ui/icons";
-import { signOut } from "@/lib/auth/actions";
 import { useSidebar } from "./sidebar-context";
 
 const mainNavigation = [
@@ -164,17 +162,6 @@ export function Sidebar() {
                 Collapse
               </>
             )}
-          </button>
-
-          <button
-            onClick={() => signOut()}
-            title={isCollapsed ? "Sign Out" : undefined}
-            className={`flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-[17px] font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors ${
-              isCollapsed ? "justify-center" : ""
-            }`}
-          >
-            <ArrowRightOnRectangleIcon className="w-5 h-5 flex-shrink-0" />
-            {!isCollapsed && "Sign Out"}
           </button>
         </div>
       </nav>
