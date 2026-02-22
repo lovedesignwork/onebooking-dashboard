@@ -23,6 +23,7 @@ const bookingLinks = [
   { name: "All Bookings", href: "/bookings", websiteId: null },
   { name: "HW Bookings", href: "/bookings?website_id=hanuman-world", websiteId: "hanuman-world" },
   { name: "FH Bookings", href: "/bookings?website_id=flying-hanuman", websiteId: "flying-hanuman" },
+  { name: "SR Bookings", href: "/bookings?website_id=sky-rock", websiteId: "sky-rock" },
   { name: "HL Bookings", href: "/bookings?website_id=hanuman-luge", websiteId: "hanuman-luge" },
 ];
 

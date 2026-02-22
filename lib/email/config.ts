@@ -27,6 +27,12 @@ export const brandEmailConfigs: Record<string, BrandEmailConfig> = {
     supportEmail: "support@flyinghanuman.com",
     brandColor: "#ea580c", // orange-600
   },
+  "sky-rock": {
+    senderEmail: "support@skyrock.app",
+    senderName: "Sky Rock Khao Lak",
+    supportEmail: "support@skyrock.app",
+    brandColor: "#0ea5e9", // sky-500
+  },
   "hanuman-luge": {
     senderEmail: "support@hanumanluge.com",
     senderName: "Hanuman Luge",
