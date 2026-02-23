@@ -25,6 +25,7 @@ interface BookingsTableProps {
   bookings: Booking[];
   sortField?: string;
   sortDirection?: "asc" | "desc";
+  websiteId?: string;
 }
 
 const statusColors: Record<string, string> = {
@@ -41,15 +42,19 @@ const transportConfig: Record<string, { label: string; color: string; Icon: Reac
   hotel_pickup: { label: "Hotel Pickup", color: "text-blue-600 bg-blue-50", Icon: HotelIcon },
   private: { label: "Private", color: "text-purple-600 bg-purple-50", Icon: CarIcon },
   self_arrange: { label: "Self Transfer", color: "text-slate-600 bg-slate-50", Icon: MapPinIcon },
+  none: { label: "No Transport", color: "text-slate-500 bg-slate-50", Icon: MapPinIcon },
 };
 
-export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTableProps) {
+export function BookingsTable({ bookings, sortField, sortDirection, websiteId }: BookingsTableProps) {
   const router = useRouter();
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
   const [pickupTimeBooking, setPickupTimeBooking] = useState<Booking | null>(null);
 
+  const isLugeWebsite = websiteId === "hanuman-luge";
+  const guestCountLabel = isLugeWebsite ? "Tickets" : "Players";
+
   const hasTransport = (booking: Booking) => {
-    return booking.transport_type && booking.transport_type !== "self_arrange";
+    return booking.transport_type && booking.transport_type !== "self_arrange" && booking.transport_type !== "none";
   };
 
   const handleSort = (field: string) => {
@@ -118,7 +123,7 @@ export function BookingsTable({ bookings, sortField, sortDirection }: BookingsTa
                 <th className="px-4 py-3">Customer</th>
                 <th className="px-4 py-3">Package</th>
                 <SortableHeader field="activity_date">Play Date</SortableHeader>
-                <SortableHeader field="guest_count">Players</SortableHeader>
+                <SortableHeader field="guest_count">{guestCountLabel}</SortableHeader>
                 <th className="px-4 py-3">Non-Players</th>
                 <th className="px-4 py-3">Transport</th>
                 <th className="px-4 py-3">Hotel / Room</th>

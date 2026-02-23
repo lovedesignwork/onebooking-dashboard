@@ -121,6 +121,7 @@ export default async function BookingsPage({ searchParams }: PageProps) {
         bookings={bookings} 
         sortField={params.sort_field}
         sortDirection={params.sort_dir as "asc" | "desc"}
+        websiteId={params.website_id}
       />
 
       <Pagination
