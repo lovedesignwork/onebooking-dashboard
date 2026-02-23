@@ -23,6 +23,7 @@ const bookingLinks = [
   { name: "FH Bookings", href: "/bookings?website_id=flying-hanuman", websiteId: "flying-hanuman" },
   { name: "SR Bookings", href: "/bookings?website_id=sky-rock", websiteId: "sky-rock" },
   { name: "HL Bookings", href: "/bookings?website_id=hanuman-luge", websiteId: "hanuman-luge" },
+  { name: "BB Bookings", href: "/bookings?website_id=banana-beach", websiteId: "banana-beach" },
 ];
 
 const bottomNavigation = [

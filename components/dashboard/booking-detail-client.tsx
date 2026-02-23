@@ -97,6 +97,10 @@ export function BookingDetailClient({ booking, syncLogs }: BookingDetailClientPr
   };
 
   const copyCustomerInfo = async () => {
+    const guestsLine = booking.adult_count !== undefined && booking.adult_count !== null
+      ? `Adults: ${booking.adult_count}${(booking.child_count ?? 0) > 0 ? `, Children: ${booking.child_count}` : ""}${booking.non_players > 0 ? ` + ${booking.non_players} non-players` : ""}`
+      : `Guests: ${booking.guest_count}${booking.non_players > 0 ? ` + ${booking.non_players} non-players` : ""}`;
+
     const text = `Customer: ${booking.customer_name}
 Email: ${booking.customer_email}
 ${booking.customer_phone ? `Phone: ${booking.customer_country_code ? `+${booking.customer_country_code} ` : ""}${booking.customer_phone}` : ""}
@@ -104,7 +108,7 @@ Booking: ${booking.booking_ref}
 Package: ${booking.package_name}
 Date: ${new Date(booking.activity_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
 Time: ${booking.time_slot}
-Guests: ${booking.guest_count}${booking.non_players > 0 ? ` + ${booking.non_players} non-players` : ""}
+${guestsLine}
 ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (Room ${booking.room_number})` : ""}` : ""}`;
 
     await navigator.clipboard.writeText(text);
@@ -162,10 +166,22 @@ ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (R
               <p className="font-semibold">{booking.time_slot}</p>
             </div>
             <div>
-              <p className="text-white/60 text-xs uppercase tracking-wider mb-1">Players</p>
+              <p className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                {booking.adult_count !== undefined && booking.adult_count !== null ? "Guests" : "Players"}
+              </p>
               <p className="font-semibold">
-                {booking.guest_count}
-                {booking.non_players > 0 && <span className="text-white/60"> +{booking.non_players}</span>}
+                {booking.adult_count !== undefined && booking.adult_count !== null ? (
+                  <>
+                    {booking.adult_count} adults
+                    {(booking.child_count ?? 0) > 0 && <span className="text-white/80"> + {booking.child_count} children</span>}
+                    {booking.non_players > 0 && <span className="text-white/60"> + {booking.non_players} non-players</span>}
+                  </>
+                ) : (
+                  <>
+                    {booking.guest_count}
+                    {booking.non_players > 0 && <span className="text-white/60"> +{booking.non_players}</span>}
+                  </>
+                )}
               </p>
             </div>
             <div>
@@ -562,12 +578,29 @@ ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (R
             <h3 className="font-semibold text-slate-900">Payment Summary</h3>
           </div>
           <div className="p-6 space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Package ({booking.guest_count}x)</span>
-              <span className="text-slate-900">
-                {booking.currency} {((booking.package_price || 0) * booking.guest_count).toLocaleString()}
-              </span>
-            </div>
+            {booking.adult_count !== undefined && booking.adult_count !== null ? (
+              <>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">Adults ({booking.adult_count}x)</span>
+                  <span className="text-slate-900">
+                    {booking.currency} {((booking.package_price || 0) * booking.adult_count).toLocaleString()}
+                  </span>
+                </div>
+                {(booking.child_count ?? 0) > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-500">Children ({booking.child_count}x)</span>
+                    <span className="text-slate-900 text-xs italic">Included</span>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-500">Package ({booking.guest_count}x)</span>
+                <span className="text-slate-900">
+                  {booking.currency} {((booking.package_price || 0) * booking.guest_count).toLocaleString()}
+                </span>
+              </div>
+            )}
 
             {booking.transport_cost > 0 && (
               <div className="flex justify-between text-sm">

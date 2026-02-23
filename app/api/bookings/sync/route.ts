@@ -64,7 +64,9 @@ export async function POST(request: NextRequest) {
       package_price: payload.package_price,
       activity_date: payload.activity_date,
       time_slot: payload.time_slot,
-      guest_count: payload.guest_count,
+      guest_count: payload.guest_count ?? (payload.adult_count || 0) + (payload.child_count || 0),
+      adult_count: payload.adult_count ?? null,
+      child_count: payload.child_count ?? null,
       total_amount: payload.total_amount,
       discount_amount: payload.discount_amount || 0,
       currency: payload.currency || "THB",
@@ -163,6 +165,7 @@ export async function POST(request: NextRequest) {
 
     // Send LINE notification for new bookings (non-blocking)
     if (eventType === "create") {
+      const guestCountForNotification = payload.guest_count ?? (payload.adult_count || 0) + (payload.child_count || 0);
       sendBookingNotification({
         websiteId: website.id,
         websiteName: website.name,
@@ -173,7 +176,9 @@ export async function POST(request: NextRequest) {
         packageName: payload.package_name,
         activityDate: payload.activity_date,
         timeSlot: payload.time_slot,
-        guestCount: payload.guest_count,
+        guestCount: guestCountForNotification,
+        adultCount: payload.adult_count,
+        childCount: payload.child_count,
         nonPlayers: payload.transport?.non_players || 0,
         transportType: payload.transport?.type || null,
         hotelName: payload.transport?.hotel_name || null,

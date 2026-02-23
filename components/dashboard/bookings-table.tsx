@@ -74,6 +74,7 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
   const [pickupTimeBooking, setPickupTimeBooking] = useState<Booking | null>(null);
 
   const isLugeWebsite = websiteId === "hanuman-luge";
+  const isBananaBeach = websiteId === "banana-beach";
 
   const hasTransport = (booking: Booking) => {
     return booking.transport_type && booking.transport_type !== "self_arrange" && booking.transport_type !== "none";
@@ -154,6 +155,16 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                     <th className="px-4 py-3 text-center">Total</th>
                     <th className="px-4 py-3">Transport</th>
                     <th className="px-4 py-3">Hotel / Room</th>
+                  </>
+                ) : isBananaBeach ? (
+                  <>
+                    <SortableHeader field="adult_count">Adults</SortableHeader>
+                    <SortableHeader field="child_count">Children</SortableHeader>
+                    <th className="px-4 py-3">Non-Players</th>
+                    <th className="px-4 py-3">Transport</th>
+                    <th className="px-4 py-3">Hotel / Room</th>
+                    <th className="px-4 py-3">Add-ons</th>
+                    <th className="px-4 py-3">Pickup Time</th>
                   </>
                 ) : (
                   <>
@@ -298,6 +309,107 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                                 </p>
                               )}
                             </div>
+                          ) : (
+                            <span className="text-sm text-slate-400">-</span>
+                          )}
+                        </td>
+                      </>
+                    ) : isBananaBeach ? (
+                      <>
+                        <td className="px-4 py-4 text-center">
+                          <span className="inline-flex items-center justify-center min-w-[28px] px-2 py-1 text-sm font-bold bg-blue-100 text-blue-700 rounded-lg">
+                            {booking.adult_count ?? 0}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          {(booking.child_count ?? 0) > 0 ? (
+                            <span className="inline-flex items-center justify-center min-w-[28px] px-2 py-1 text-sm font-bold bg-green-100 text-green-700 rounded-lg">
+                              {booking.child_count}
+                            </span>
+                          ) : (
+                            <span className="text-xs text-slate-300">-</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <span className="text-sm text-slate-500">
+                            {booking.non_players > 0 ? booking.non_players : "-"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4">
+                          {transport ? (
+                            <div className="space-y-1">
+                              <span
+                                className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${transport.color}`}
+                              >
+                                <transport.Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                                {transport.label}
+                              </span>
+                              {((booking.adult_count ?? 0) > 0 || (booking.child_count ?? 0) > 0 || booking.non_players > 0) && (
+                                <p className="text-xs text-slate-500 whitespace-nowrap">
+                                  Pickup: {(booking.adult_count ?? 0) + (booking.child_count ?? 0) + (booking.non_players || 0)} pax
+                                </p>
+                              )}
+                            </div>
+                          ) : booking.transport_type === "self_arrange" ? (
+                            <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap text-slate-600 bg-slate-50">
+                              <MapPinIcon className="w-3.5 h-3.5 flex-shrink-0" />
+                              Self Transfer
+                            </span>
+                          ) : (
+                            <span className="text-sm text-slate-400">-</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4">
+                          {booking.hotel_name ? (
+                            <div>
+                              <p className="text-sm text-slate-800">{booking.hotel_name}</p>
+                              {booking.room_number && (
+                                <p className="text-xs text-slate-500">
+                                  Room {booking.room_number}
+                                </p>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-sm text-slate-400">-</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4">
+                          {booking.addons && booking.addons.length > 0 ? (
+                            <div className="flex flex-col gap-1">
+                              {booking.addons.map((addon, idx) => (
+                                <span
+                                  key={idx}
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-orange-50 text-orange-700 border border-orange-200 rounded text-xs font-medium whitespace-nowrap"
+                                >
+                                  <GiftIcon className="w-3 h-3 flex-shrink-0" />
+                                  {addon.quantity > 1 && `${addon.quantity}x `}
+                                  {addon.name}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-sm text-slate-400">-</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4">
+                          {hasTransport(booking) ? (
+                            booking.pickup_time ? (
+                              <button
+                                onClick={() => setPickupTimeBooking(booking)}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors"
+                              >
+                                <ClockIcon className="w-4 h-4" />
+                                {booking.pickup_time}
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => setPickupTimeBooking(booking)}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-lg text-sm font-medium hover:bg-amber-100 transition-colors"
+                              >
+                                <ClockIcon className="w-4 h-4" />
+                                Set Time
+                              </button>
+                            )
                           ) : (
                             <span className="text-sm text-slate-400">-</span>
                           )}

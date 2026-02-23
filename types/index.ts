@@ -29,6 +29,8 @@ export interface Booking {
   activity_date: string;
   time_slot: string;
   guest_count: number;
+  adult_count?: number;
+  child_count?: number;
   total_amount: number;
   discount_amount: number;
   currency: string;
@@ -93,7 +95,9 @@ export interface BookingSyncPayload {
   package_price: number;
   activity_date: string;
   time_slot: string;
-  guest_count: number;
+  guest_count?: number;
+  adult_count?: number;
+  child_count?: number;
   total_amount: number;
   discount_amount?: number;
   currency?: string;

@@ -23,6 +23,8 @@ interface BookingNotificationData {
   activityDate: string;
   timeSlot: string;
   guestCount: number;
+  adultCount?: number;
+  childCount?: number;
   nonPlayers: number;
   transportType: string | null;
   hotelName: string | null;
@@ -45,10 +47,20 @@ function formatBookingMessage(data: BookingNotificationData): string {
     year: "numeric",
   });
 
-  const guestInfo =
-    data.nonPlayers > 0
-      ? `${data.guestCount} players + ${data.nonPlayers} non-players`
-      : `${data.guestCount} players`;
+  let guestInfo: string;
+  if (data.adultCount !== undefined && data.adultCount !== null) {
+    guestInfo = `${data.adultCount} adults`;
+    if (data.childCount && data.childCount > 0) {
+      guestInfo += ` + ${data.childCount} children`;
+    }
+    if (data.nonPlayers > 0) {
+      guestInfo += ` + ${data.nonPlayers} non-players`;
+    }
+  } else {
+    guestInfo = data.nonPlayers > 0
+      ? `${data.guestCount} guests + ${data.nonPlayers} non-players`
+      : `${data.guestCount} guests`;
+  }
 
   let transportInfo = "";
   if (data.transportType && data.transportType !== "self_arrange") {

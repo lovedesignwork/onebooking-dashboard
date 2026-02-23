@@ -39,6 +39,12 @@ export const brandEmailConfigs: Record<string, BrandEmailConfig> = {
     supportEmail: "support@hanumanluge.com",
     brandColor: "#9333ea", // purple-600
   },
+  "banana-beach": {
+    senderEmail: "support@bananabeach.app",
+    senderName: "Banana Beach",
+    supportEmail: "support@bananabeach.app",
+    brandColor: "#eab308", // yellow-500
+  },
 };
 
 /**
