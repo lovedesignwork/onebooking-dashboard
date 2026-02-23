@@ -160,7 +160,6 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                   <>
                     <SortableHeader field="adult_count">Adults</SortableHeader>
                     <SortableHeader field="child_count">Children</SortableHeader>
-                    <th className="px-4 py-3">Non-Players</th>
                     <th className="px-4 py-3">Transport</th>
                     <th className="px-4 py-3">Hotel / Room</th>
                     <th className="px-4 py-3">Add-ons</th>
@@ -330,11 +329,6 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                             <span className="text-xs text-slate-300">-</span>
                           )}
                         </td>
-                        <td className="px-4 py-4 text-center">
-                          <span className="text-sm text-slate-500">
-                            {booking.non_players > 0 ? booking.non_players : "-"}
-                          </span>
-                        </td>
                         <td className="px-4 py-4">
                           {transport ? (
                             <div className="space-y-1">
@@ -344,9 +338,9 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                                 <transport.Icon className="w-3.5 h-3.5 flex-shrink-0" />
                                 {transport.label}
                               </span>
-                              {((booking.adult_count ?? 0) > 0 || (booking.child_count ?? 0) > 0 || booking.non_players > 0) && (
+                              {((booking.adult_count ?? 0) > 0 || (booking.child_count ?? 0) > 0) && (
                                 <p className="text-xs text-slate-500 whitespace-nowrap">
-                                  Pickup: {(booking.adult_count ?? 0) + (booking.child_count ?? 0) + (booking.non_players || 0)} pax
+                                  Pickup: {(booking.adult_count ?? 0) + (booking.child_count ?? 0)} pax
                                 </p>
                               )}
                             </div>
