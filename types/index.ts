@@ -62,7 +62,7 @@ export type BookingStatus =
   | "refunded"
   | "no_show";
 
-export type TransportType = "hotel_pickup" | "self_arrange" | "private";
+export type TransportType = "hotel_pickup" | "self_arrange" | "private" | "none";
 
 export interface SyncLog {
   id: string;
