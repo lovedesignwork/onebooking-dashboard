@@ -152,6 +152,8 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                     <th className="px-4 py-3 text-center">3 Rides</th>
                     <th className="px-4 py-3 text-center">Doubling</th>
                     <th className="px-4 py-3 text-center">Total</th>
+                    <th className="px-4 py-3">Transport</th>
+                    <th className="px-4 py-3">Hotel / Room</th>
                   </>
                 ) : (
                   <>
@@ -275,6 +277,30 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                           <span className="inline-flex items-center justify-center min-w-[32px] px-2 py-1 text-sm font-bold bg-slate-800 text-white rounded-lg">
                             {booking.guest_count}
                           </span>
+                        </td>
+                        <td className="px-4 py-4">
+                          {booking.transport_type === "private" ? (
+                            <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap text-purple-600 bg-purple-50">
+                              <CarIcon className="w-3.5 h-3.5 flex-shrink-0" />
+                              Private
+                            </span>
+                          ) : (
+                            <span className="text-sm text-slate-400">-</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4">
+                          {booking.hotel_name ? (
+                            <div>
+                              <p className="text-sm text-slate-800">{booking.hotel_name}</p>
+                              {booking.room_number && (
+                                <p className="text-xs text-slate-500">
+                                  Room {booking.room_number}
+                                </p>
+                              )}
+                            </div>
+                          ) : (
+                            <span className="text-sm text-slate-400">-</span>
+                          )}
                         </td>
                       </>
                     ) : (
