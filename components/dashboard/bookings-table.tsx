@@ -509,29 +509,64 @@ export function BookingsTable({ bookings, sortField, sortDirection, websiteId }:
                       </>
                     )}
                     <td className="px-4 py-4">
-                      <p className="text-sm font-medium text-slate-800">
-                        {booking.currency} {booking.total_amount.toLocaleString()}
-                      </p>
-                      {booking.discount_amount > 0 && (
-                        <div className="flex items-center gap-1 mt-0.5">
-                          <TagIcon className="w-3 h-3 text-green-600" />
-                          <span className="text-xs text-green-600">
-                            -{booking.currency} {booking.discount_amount.toLocaleString()}
-                          </span>
+                      {booking.discount_amount > 0 ? (
+                        <div className="space-y-0.5">
+                          <p className="text-xs text-slate-400 line-through">
+                            {booking.currency} {(booking.total_amount + booking.discount_amount).toLocaleString()}
+                          </p>
+                          <p className="text-sm font-bold text-slate-800">
+                            {booking.currency} {booking.total_amount.toLocaleString()}
+                          </p>
+                          <div className="flex items-center gap-1">
+                            <span className="inline-flex items-center px-1.5 py-0.5 bg-green-100 text-green-700 rounded text-xs font-medium">
+                              {Math.round((booking.discount_amount / (booking.total_amount + booking.discount_amount)) * 100)}% OFF
+                            </span>
+                          </div>
+                          {booking.promo_code && (
+                            <div className="flex items-center gap-1 mt-0.5">
+                              <TagIcon className="w-3 h-3 text-purple-600" />
+                              <span className="text-xs text-purple-600 font-medium">
+                                {booking.promo_code}
+                              </span>
+                            </div>
+                          )}
                         </div>
+                      ) : (
+                        <p className="text-sm font-medium text-slate-800">
+                          {booking.currency} {booking.total_amount.toLocaleString()}
+                        </p>
                       )}
                     </td>
                     <td className="px-4 py-4">
-                      {booking.special_requests ? (
-                        <div className="flex items-start gap-1.5 max-w-[180px]" title={booking.special_requests}>
-                          <StickyNoteIcon className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
-                          <p className="text-xs text-slate-600 line-clamp-2">
-                            {booking.special_requests}
-                          </p>
-                        </div>
-                      ) : (
-                        <span className="text-xs text-slate-400">-</span>
-                      )}
+                      <div className="space-y-1.5 max-w-[200px]">
+                        {booking.promo_code && !booking.discount_amount && (
+                          <div className="flex items-center gap-1" title={`Promo code: ${booking.promo_code}`}>
+                            <TagIcon className="w-3.5 h-3.5 text-purple-500 flex-shrink-0" />
+                            <span className="text-xs text-purple-600 font-medium truncate">
+                              {booking.promo_code}
+                            </span>
+                          </div>
+                        )}
+                        {booking.notes && (
+                          <div className="flex items-start gap-1.5" title={booking.notes}>
+                            <StickyNoteIcon className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-xs text-slate-600 line-clamp-2">
+                              {booking.notes}
+                            </p>
+                          </div>
+                        )}
+                        {booking.special_requests && (
+                          <div className="flex items-start gap-1.5" title={booking.special_requests}>
+                            <StickyNoteIcon className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-xs text-slate-600 line-clamp-2">
+                              {booking.special_requests}
+                            </p>
+                          </div>
+                        )}
+                        {!booking.promo_code && !booking.notes && !booking.special_requests && (
+                          <span className="text-xs text-slate-400">-</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-4">
                       <span

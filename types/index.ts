@@ -50,6 +50,8 @@ export interface Booking {
   stripe_payment_intent_id: string | null;
   admin_notes: string | null;
   pickup_time: string | null;
+  promo_code: string | null;
+  notes: string | null;
   source_created_at: string | null;
   created_at: string;
   updated_at: string;
@@ -119,6 +121,8 @@ export interface BookingSyncPayload {
   };
   addons?: BookingAddon[];
   stripe_payment_intent_id?: string;
+  promo_code?: string | null;
+  notes?: string | null;
   created_at?: string;
 }
 

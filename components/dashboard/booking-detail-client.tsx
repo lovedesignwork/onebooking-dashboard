@@ -138,14 +138,26 @@ ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (R
             </div>
             <div className="text-right">
               <p className="text-white/60 text-sm">Total Amount</p>
+              {booking.discount_amount > 0 && (
+                <p className="text-lg text-white/50 line-through">
+                  {booking.currency} {(booking.total_amount + booking.discount_amount).toLocaleString()}
+                </p>
+              )}
               <p className="text-3xl font-bold">
                 {booking.currency} {booking.total_amount.toLocaleString()}
               </p>
               {booking.discount_amount > 0 && (
-                <p className="text-emerald-300 text-sm flex items-center justify-end gap-1">
-                  <TagIcon className="w-3.5 h-3.5" />
-                  Saved {booking.currency} {booking.discount_amount.toLocaleString()}
-                </p>
+                <div className="flex items-center justify-end gap-2 mt-1">
+                  <span className="inline-flex items-center px-2 py-0.5 bg-emerald-400/20 text-emerald-300 rounded text-xs font-bold">
+                    {Math.round((booking.discount_amount / (booking.total_amount + booking.discount_amount)) * 100)}% OFF
+                  </span>
+                  {booking.promo_code && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-400/20 text-purple-300 rounded text-xs font-medium">
+                      <TagIcon className="w-3 h-3" />
+                      {booking.promo_code}
+                    </span>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -278,6 +290,34 @@ ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (R
                     </div>
                   )}
                 </div>
+
+                {/* Promo Code */}
+                {booking.promo_code && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Promo Code</h4>
+                    <div className="bg-purple-50 border border-purple-100 rounded-xl p-4">
+                      <div className="flex items-center gap-2">
+                        <TagIcon className="w-5 h-5 text-purple-600" />
+                        <span className="text-lg font-bold text-purple-700">{booking.promo_code}</span>
+                        {booking.discount_amount > 0 && (
+                          <span className="inline-flex items-center px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs font-bold ml-2">
+                            {Math.round((booking.discount_amount / (booking.total_amount + booking.discount_amount)) * 100)}% OFF
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Notes (from source) */}
+                {booking.notes && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Booking Notes</h4>
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                      <p className="text-slate-700 whitespace-pre-wrap">{booking.notes}</p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Special Requests */}
                 {booking.special_requests && (
@@ -623,7 +663,15 @@ ${booking.hotel_name ? `Hotel: ${booking.hotel_name}${booking.room_number ? ` (R
 
             {booking.discount_amount > 0 && (
               <div className="flex justify-between text-sm text-emerald-600">
-                <span>Discount</span>
+                <div className="flex items-center gap-2">
+                  <span>Discount</span>
+                  {booking.promo_code && (
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded text-xs font-medium">
+                      <TagIcon className="w-3 h-3" />
+                      {booking.promo_code}
+                    </span>
+                  )}
+                </div>
                 <span>-{booking.currency} {booking.discount_amount.toLocaleString()}</span>
               </div>
             )}

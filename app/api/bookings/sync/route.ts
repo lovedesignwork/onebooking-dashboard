@@ -84,6 +84,8 @@ export async function POST(request: NextRequest) {
       transport_cost: payload.transport?.cost || 0,
       addons: payload.addons || [],
       stripe_payment_intent_id: payload.stripe_payment_intent_id || null,
+      promo_code: payload.promo_code || null,
+      notes: payload.notes || null,
       source_created_at: payload.created_at || null,
     };
 
